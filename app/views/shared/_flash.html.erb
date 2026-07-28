@@ -1,0 +1,13 @@
+<% if alert = flash[:alert] %>
+  <%= render RubyUI::Alert.new(variant: :destructive, id: "alert", class: "mb-5") do %>
+    <%= lucide_icon "circle-alert", class: "size-4" %>
+    <%= render(RubyUI::AlertDescription.new) { alert } %>
+  <% end %>
+<% end %>
+
+<% if notice = flash[:notice] %>
+  <%= render RubyUI::Alert.new(variant: :success, id: "notice", class: "mb-5") do %>
+    <%= lucide_icon "circle-check", class: "size-4" %>
+    <%= render(RubyUI::AlertDescription.new) { notice } %>
+  <% end %>
+<% end %>

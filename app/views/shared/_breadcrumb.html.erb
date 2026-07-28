@@ -1,0 +1,19 @@
+<% if @breadcrumb %>
+  <% items = breadcrumbs_for(@breadcrumb) %>
+  <%= render RubyUI::Breadcrumb.new do %>
+    <%= render RubyUI::BreadcrumbList.new do %>
+      <% items.each_with_index do |item, index| %>
+        <%= render RubyUI::BreadcrumbItem.new do %>
+          <% if item[:path] %>
+            <%= render(RubyUI::BreadcrumbLink.new(href: item[:path])) { item[:label] } %>
+          <% else %>
+            <%= render(RubyUI::BreadcrumbPage.new) { item[:label] } %>
+          <% end %>
+        <% end %>
+        <% if index < items.size - 1 %>
+          <%= render RubyUI::BreadcrumbSeparator.new %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "flash" do %>
+  <div id="flash"><%= render "shared/flash" %></div>
+<% end %>
+
+<%= turbo_stream.replace "users" do %>
+  <%= render "users/table", users: @users, page: @page, total_count: @total_count %>
+<% end %>

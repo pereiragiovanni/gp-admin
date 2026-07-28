@@ -1,0 +1,35 @@
+<h1 class="font-bold text-2xl text-gray-900"><%= t(".title") %></h1>
+
+<% if @user.errors.any? %>
+  <div class="py-2 px-3 bg-red-50 mb-5 text-red-600 rounded-lg text-sm" id="error_explanation">
+    <ul class="list-disc pl-4">
+      <% @user.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @user, url: registration_path, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= render RubyUI::Input.new(type: :text, name: "user[name]", id: "user_name", required: true, autofocus: true, autocomplete: "name", placeholder: t(".name_placeholder"), value: @user.name) %>
+  </div>
+
+  <div class="my-5">
+    <%= render RubyUI::Input.new(type: :email, name: "user[email_address]", id: "user_email_address", required: true, autocomplete: "username", placeholder: t(".email_placeholder"), value: @user.email_address) %>
+  </div>
+
+  <div class="my-5">
+    <%= render RubyUI::Input.new(type: :tel, name: "user[phone]", id: "user_phone", autocomplete: "tel", placeholder: t(".phone_placeholder"), value: @user.phone, data: { controller: "input-mask", input_mask_mask_value: "(00) 00000-0000" }) %>
+  </div>
+
+  <div class="my-5">
+    <%= render Components::InputPassword.new(name: "user[password]", id: "user_password", required: true, autocomplete: "new-password", placeholder: t(".password_placeholder")) %>
+  </div>
+
+  <%= render(RubyUI::Button.new(type: :submit)) { t(".submit") } %>
+<% end %>
+
+<p class="mt-6 text-sm text-gray-500">
+  <%= t(".has_account") %> <%= link_to t(".sign_in"), new_session_path, class: "text-primary underline hover:no-underline" %>
+</p>

@@ -1,0 +1,7 @@
+<% unless Rails.env.production? %>
+  <div class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center">
+    <div class="rounded-b-md bg-red-600 px-3 py-0.5 text-[10px] font-bold uppercase text-white shadow-md">
+      <%= t("shared.env_banner.#{Rails.env}") %>
+    </div>
+  </div>
+<% end %>

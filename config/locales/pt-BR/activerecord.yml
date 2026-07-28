@@ -1,0 +1,14 @@
+pt-BR:
+  activerecord:
+    attributes:
+      user:
+        email_address: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirmação de senha"
+    errors:
+      messages:
+        blank: "não pode ficar em branco"
+        taken: "já está em uso"
+        invalid: "não é válido"
+        too_short: "é muito curto (mínimo de %{count} caracteres)"
+        confirmation: "não é igual à confirmação"

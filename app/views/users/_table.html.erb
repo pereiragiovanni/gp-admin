@@ -1,0 +1,109 @@
+<%# locals: (users:, page:, total_count:) %>
+<%= render RubyUI::DataTable.new(id: "users") do %>
+  <%= render RubyUI::Table.new do %>
+    <%= render RubyUI::TableHeader.new do %>
+      <%= render RubyUI::TableRow.new do %>
+        <%= render(RubyUI::TableHead.new) { t("users.index.status") } %>
+        <%= render(RubyUI::TableHead.new) { t("users.index.name") } %>
+        <%= render(RubyUI::TableHead.new) { t("users.index.email") } %>
+        <%= render(RubyUI::TableHead.new) { t("users.index.phone") } %>
+        <%= render(RubyUI::TableHead.new) { t("users.index.role") } %>
+        <%= render(RubyUI::TableHead.new) { t("users.index.created_at") } %>
+        <%= render(RubyUI::TableHead.new) { t("users.index.actions") } %>
+      <% end %>
+    <% end %>
+
+    <%= render RubyUI::TableBody.new do %>
+      <% users.each do |user| %>
+        <%= render RubyUI::TableRow.new do %>
+          <%= render RubyUI::TableCell.new do %>
+            <% if user.active? %>
+              <%= render(RubyUI::Badge.new(variant: :success)) { t("users.index.active") } %>
+            <% else %>
+              <%= render(RubyUI::Badge.new(variant: :destructive)) { t("users.index.inactive") } %>
+            <% end %>
+          <% end %>
+          <%= render(RubyUI::TableCell.new) { user.name.presence || "—" } %>
+          <%= render(RubyUI::TableCell.new) { user.email_address } %>
+          <%= render RubyUI::TableCell.new do %>
+            <% if user.phone.present? %>
+              <input type="text" readonly tabindex="-1" value="<%= user.phone %>"
+                     class="border-0 bg-transparent p-0 text-sm text-gray-900 w-auto focus:outline-none focus:ring-0"
+                     data-controller="input-mask" data-input-mask-mask-value="(00) 00000-0000">
+            <% else %>
+              —
+            <% end %>
+          <% end %>
+          <%= render(RubyUI::TableCell.new) { t("shared.roles.#{user.role}") } %>
+          <%= render(RubyUI::TableCell.new) { user.created_at.strftime("%d/%m/%Y") } %>
+
+          <%= render RubyUI::TableCell.new do %>
+            <%= render RubyUI::Dialog.new do %>
+              <%= render RubyUI::DialogTrigger.new do %>
+                <%= render(RubyUI::Button.new(variant: :outline, size: :sm)) { t("users.index.edit") } %>
+              <% end %>
+
+              <%= render RubyUI::DialogContent.new do %>
+                <%= render RubyUI::DialogHeader.new do %>
+                  <%= render(RubyUI::DialogTitle.new) { t("users.index.edit_title") } %>
+                <% end %>
+
+                <%= form_with model: user, url: user_path(user), method: :patch do |form| %>
+                  <input type="hidden" name="page" value="<%= page %>">
+                  <%= render RubyUI::DialogMiddle.new do %>
+                    <div class="space-y-4">
+                      <div class="flex items-center gap-3">
+                        <%= render RubyUI::Switch.new(name: "user[active]", checked: user.active?, id: "user_#{user.id}_active") %>
+                        <label for="user_<%= user.id %>_active" class="text-sm font-medium text-gray-700"><%= t("users.index.active") %></label>
+                      </div>
+
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2"><%= t("users.index.name") %></label>
+                        <%= render RubyUI::Input.new(type: :text, name: "user[name]", value: user.name) %>
+                      </div>
+
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2"><%= t("users.index.email") %></label>
+                        <%= render RubyUI::Input.new(type: :email, name: "user[email_address]", value: user.email_address, required: true) %>
+                      </div>
+
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2"><%= t("users.index.phone") %></label>
+                        <%= render RubyUI::Input.new(type: :tel, name: "user[phone]", value: user.phone, data: { controller: "input-mask", input_mask_mask_value: "(00) 00000-0000" }) %>
+                      </div>
+
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2"><%= t("users.index.role") %></label>
+                        <%= render RubyUI::Select.new do %>
+                          <%= render RubyUI::SelectInput.new(name: "user[role]", value: user.role) %>
+                          <%= render RubyUI::SelectTrigger.new do %>
+                            <%= render(RubyUI::SelectValue.new) { t("shared.roles.#{user.role}") } %>
+                          <% end %>
+                          <%= render RubyUI::SelectContent.new do %>
+                            <% User.roles.keys.each do |role| %>
+                              <%= render(RubyUI::SelectItem.new(value: role)) { t("shared.roles.#{role}") } %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+
+                  <%= render RubyUI::DialogFooter.new(class: "flex justify-end gap-3") do %>
+                    <%= render(RubyUI::Button.new(type: :button, variant: :outline, data: { action: "click->ruby-ui--dialog#dismiss" })) { t("users.index.cancel") } %>
+                    <%= render(RubyUI::Button.new(type: :submit)) { t("users.index.save") } %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render RubyUI::DataTablePaginationBar.new do %>
+    <div class="text-sm text-muted-foreground"><%= t("users.index.count", count: total_count) %></div>
+    <%= render RubyUI::DataTablePagination.new(page: page, per_page: UsersController::PER_PAGE, total_count: total_count, path: users_path) %>
+  <% end %>
+<% end %>

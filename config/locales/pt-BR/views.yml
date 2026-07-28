@@ -1,0 +1,111 @@
+pt-BR:
+  flash:
+    application:
+      not_authorized: "Você não tem permissão para acessar essa página."
+    sessions:
+      invalid_credentials: "E-mail ou senha inválidos."
+      rate_limited: "Muitas tentativas. Tente novamente mais tarde."
+    registrations:
+      success: "Bem-vindo! Sua conta foi criada com sucesso."
+      rate_limited: "Muitas tentativas. Tente novamente mais tarde."
+    passwords:
+      instructions_sent: "Instruções de redefinição de senha enviadas (caso exista um usuário com esse e-mail)."
+      reset_success: "Sua senha foi redefinida com sucesso."
+      invalid_token: "O link de redefinição de senha é inválido ou expirou."
+      mismatch: "As senhas não coincidem."
+      rate_limited: "Muitas tentativas. Tente novamente mais tarde."
+    settings:
+      updated: "Perfil atualizado com sucesso."
+      avatar_removed: "Foto de perfil removida."
+    users:
+      updated: "Usuário atualizado com sucesso."
+
+  sessions:
+    new:
+      title: "Entrar"
+      email_placeholder: "Digite seu e-mail"
+      password_placeholder: "Digite sua senha"
+      submit: "Entrar"
+      forgot_password: "Esqueceu a senha?"
+      no_account: "Não tem uma conta?"
+      sign_up: "Cadastre-se"
+
+  registrations:
+    new:
+      title: "Criar conta"
+      name_placeholder: "Digite seu nome"
+      email_placeholder: "Digite seu e-mail"
+      phone_placeholder: "Digite seu telefone"
+      password_placeholder: "Escolha uma senha"
+      submit: "Cadastrar"
+      has_account: "Já tem uma conta?"
+      sign_in: "Entrar"
+
+  passwords:
+    new:
+      title: "Esqueceu sua senha?"
+      email_placeholder: "Digite seu e-mail"
+      submit: "Enviar"
+      back: "Voltar"
+    edit:
+      title: "Redefinir senha"
+      password_placeholder: "Digite a nova senha"
+      password_confirmation_placeholder: "Repita a nova senha"
+      submit: "Salvar"
+
+  dashboard:
+    index:
+      title: "Painel"
+      welcome: "Bem-vindo(a) de volta, %{name}."
+
+  users:
+    index:
+      title: "Usuários"
+      name: "Nome"
+      email: "E-mail"
+      phone: "Telefone"
+      status: "Status"
+      active: "Ativo"
+      inactive: "Inativo"
+      count:
+        zero: "Nenhum usuário"
+        one: "1 usuário"
+        other: "%{count} usuários"
+      created_at: "Cadastrado em"
+      role: "Perfil"
+      actions: "Ações"
+      edit: "Editar"
+      edit_title: "Editar usuário"
+      cancel: "Cancelar"
+      save: "Salvar"
+
+  settings:
+    edit:
+      back: "Voltar"
+      title: "Perfil"
+      description: "Atualize suas informações pessoais, foto e senha."
+      avatar_label: "Foto de perfil"
+      remove_avatar: "Remover foto"
+      name_label: "Nome"
+      email_label: "E-mail"
+      phone_label: "Telefone"
+      password_label: "Nova senha"
+      password_placeholder: "Deixe em branco para manter a senha atual"
+      submit: "Salvar"
+
+  shared:
+    env_banner:
+      development: "Desenvolvimento"
+      staging: "Staging"
+      test: "Teste"
+    header:
+      log_out: "Sair"
+    navigation:
+      dashboard: "Dashboard"
+      account: "Administração"
+      profile: "Perfil"
+      users: "Usuários"
+      collapse: "Recolher"
+    roles:
+      admin: "Administrador"
+      member: "Membro"

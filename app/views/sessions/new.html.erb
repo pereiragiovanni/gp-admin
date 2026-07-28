@@ -1,0 +1,20 @@
+<h1 class="font-bold text-2xl text-gray-900"><%= t(".title") %></h1>
+
+<%= form_with url: session_url, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= render RubyUI::Input.new(type: :email, name: "email_address", id: "email_address", required: true, autofocus: true, autocomplete: "username", placeholder: t(".email_placeholder"), value: params[:email_address]) %>
+  </div>
+
+  <div class="my-5">
+    <%= render Components::InputPassword.new(name: "password", id: "password", required: true, autocomplete: "current-password", placeholder: t(".password_placeholder")) %>
+  </div>
+
+  <div class="flex items-center justify-between gap-4">
+    <%= render(RubyUI::Button.new(type: :submit)) { t(".submit") } %>
+    <%= link_to t(".forgot_password"), new_password_path, class: "text-sm text-gray-500 underline hover:no-underline" %>
+  </div>
+<% end %>
+
+<p class="mt-6 text-sm text-gray-500">
+  <%= t(".no_account") %> <%= link_to t(".sign_up"), new_registration_path, class: "text-primary underline hover:no-underline" %>
+</p>

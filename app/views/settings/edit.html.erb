@@ -1,0 +1,60 @@
+<%= render RubyUI::Card.new(class: "w-full max-w-6xl") do %>
+  <%= render RubyUI::CardHeader.new do %>
+    <%= render(RubyUI::CardTitle.new) { t(".title") } %>
+    <%= render(RubyUI::CardDescription.new) { t(".description") } %>
+  <% end %>
+
+  <%= form_with model: @user, url: settings_path, method: :patch, multipart: true do |form| %>
+    <%= render RubyUI::CardContent.new do %>
+      <div class="flex flex-col lg:flex-row gap-6 lg:gap-10 items-center">
+        <div class="flex flex-col items-center gap-3 shrink-0" data-controller="avatar-preview">
+          <label for="user_avatar" aria-label="<%= t(".avatar_label") %>" class="relative cursor-pointer group rounded-full">
+            <%= image_tag(@user.avatar.attached? ? @user.avatar : "user.png", alt: @user.name.to_s, class: "size-48 rounded-full object-cover", data: { avatar_preview_target: "preview" }) %>
+            <span class="absolute inset-0 rounded-full bg-black/0 group-hover:bg-black/40 flex items-center justify-center transition-colors">
+              <%= lucide_icon "camera", class: "size-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" %>
+            </span>
+          </label>
+          <%= render RubyUI::Input.new(type: :file, name: "user[avatar]", id: "user_avatar", accept: "image/*", class: "hidden", data: { avatar_preview_target: "input", action: "change->avatar-preview#change" }) %>
+
+          <% if @user.avatar.attached? %>
+            <%= link_to remove_avatar_path, data: { turbo_method: :delete },
+                  class: "inline-flex items-center gap-1.5 justify-center rounded-md text-xs font-medium px-3 py-1.5 bg-destructive text-white hover:bg-destructive/90" do %>
+              <%= lucide_icon "trash-2", class: "size-3.5" %>
+              <%= t(".remove_avatar") %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="w-full flex-1 grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2" for="user_name"><%= t(".name_label") %></label>
+            <%= render RubyUI::Input.new(type: :text, name: "user[name]", id: "user_name", autocomplete: "name", value: @user.name) %>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2" for="user_email_address"><%= t(".email_label") %></label>
+            <%= render RubyUI::Input.new(type: :email, name: "user[email_address]", id: "user_email_address", required: true, autocomplete: "username", value: @user.email_address) %>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2" for="user_phone"><%= t(".phone_label") %></label>
+            <%= render RubyUI::Input.new(type: :tel, name: "user[phone]", id: "user_phone", autocomplete: "tel", value: @user.phone, data: { controller: "input-mask", input_mask_mask_value: "(00) 00000-0000" }) %>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2" for="user_password"><%= t(".password_label") %></label>
+            <%= render Components::InputPassword.new(name: "user[password]", id: "user_password", autocomplete: "new-password", placeholder: t(".password_placeholder")) %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= render RubyUI::CardFooter.new(class: "flex justify-end gap-3 border-t pt-6") do %>
+      <%= link_to root_path,
+            class: "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors px-4 py-2 h-9 text-sm bg-secondary text-secondary-foreground hover:bg-opacity-80" do %>
+        <%= t(".back") %>
+      <% end %>
+      <%= render(RubyUI::Button.new(type: :submit)) { t(".submit") } %>
+    <% end %>
+  <% end %>
+<% end %>

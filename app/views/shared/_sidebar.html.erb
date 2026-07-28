@@ -1,0 +1,48 @@
+<aside class="group/sidebar w-64 shrink-0 bg-white border-r border-gray-200 h-screen sticky top-0 flex flex-col transition-all duration-200" data-controller="sidebar" data-collapsed="false">
+  <%= link_to root_path, class: "h-16 flex items-center gap-2 px-4 border-b border-gray-200" do %>
+    <%= image_tag "icon.png", alt: "GP Admin", class: "size-7 shrink-0" %>
+    <span class="text-lg font-semibold text-gray-900 truncate group-data-[collapsed=true]/sidebar:hidden">GP Admin</span>
+  <% end %>
+
+  <nav class="flex-1 overflow-y-auto px-3 py-4 divide-y divide-gray-100">
+    <% sidebar_menu.each do |item| %>
+      <div class="py-1">
+        <% if item[:children] %>
+          <% open = item[:children].any? { |child| current_page?(child[:path]) } %>
+          <div data-controller="disclosure">
+            <%= button_tag type: "button", data: { action: "click->disclosure#toggle click->sidebar#expand" },
+                  class: "w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100" do %>
+              <%= lucide_icon item[:icon], class: "size-4 shrink-0" %>
+              <span class="flex-1 text-left truncate group-data-[collapsed=true]/sidebar:hidden"><%= item[:label] %></span>
+              <%= lucide_icon "chevron-right", class: "size-4 shrink-0 transition-transform group-data-[collapsed=true]/sidebar:hidden #{"rotate-90" if open}", data: { disclosure_target: "icon" } %>
+            <% end %>
+            <div data-disclosure-target="panel" class="relative mt-1 ml-5 space-y-1 group-data-[collapsed=true]/sidebar:hidden <%= "hidden" unless open %>">
+              <div class="absolute left-0 top-0 bottom-4 w-px bg-gray-200"></div>
+              <% item[:children].each do |child| %>
+                <div class="relative">
+                  <span class="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-px bg-gray-200"></span>
+                  <%= link_to child[:label], child[:path],
+                        class: "block ml-4 px-3 py-2 rounded-md text-sm font-medium border-l-2 #{current_page?(child[:path]) ? "border-primary bg-primary/10 text-primary" : "border-transparent text-gray-600 hover:bg-gray-100"}" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to item[:path],
+                class: "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium border-l-2 #{current_page?(item[:path]) ? "border-primary bg-primary/10 text-primary" : "border-transparent text-gray-700 hover:bg-gray-100"}" do %>
+            <%= lucide_icon item[:icon], class: "size-4 shrink-0" %>
+            <span class="truncate group-data-[collapsed=true]/sidebar:hidden"><%= item[:label] %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </nav>
+
+  <div class="border-t border-gray-200 p-2">
+    <%= button_tag type: "button", data: { action: "click->sidebar#toggle" },
+          class: "w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:bg-gray-100" do %>
+      <%= lucide_icon "panel-left", class: "size-4 shrink-0" %>
+      <span class="truncate group-data-[collapsed=true]/sidebar:hidden"><%= t("shared.navigation.collapse") %></span>
+    <% end %>
+  </div>
+</aside>

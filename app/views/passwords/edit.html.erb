@@ -1,0 +1,13 @@
+<h1 class="font-bold text-2xl text-gray-900"><%= t(".title") %></h1>
+
+<%= form_with url: password_path(params[:token]), method: :put, class: "contents" do |form| %>
+  <div class="my-5">
+    <%= render Components::InputPassword.new(name: "password", id: "password", required: true, autocomplete: "new-password", placeholder: t(".password_placeholder")) %>
+  </div>
+
+  <div class="my-5">
+    <%= render Components::InputPassword.new(name: "password_confirmation", id: "password_confirmation", required: true, autocomplete: "new-password", placeholder: t(".password_confirmation_placeholder")) %>
+  </div>
+
+  <%= render(RubyUI::Button.new(type: :submit)) { t(".submit") } %>
+<% end %>

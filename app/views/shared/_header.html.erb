@@ -1,0 +1,21 @@
+<header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 gap-4">
+  <%= render "shared/breadcrumb" %>
+
+  <%= render RubyUI::DropdownMenu.new do %>
+    <%= render RubyUI::DropdownMenuTrigger.new do %>
+      <div class="flex items-center gap-2 cursor-pointer">
+        <%= image_tag(Current.user.avatar.attached? ? Current.user.avatar : "user.png", alt: Current.user.name.to_s, class: "size-8 rounded-full object-cover") %>
+        <div class="text-left">
+          <div class="text-sm font-medium text-gray-700"><%= Current.user.name.presence || Current.user.email_address %></div>
+          <div class="text-xs text-gray-400"><%= t("shared.roles.#{Current.user.role}") %></div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= render RubyUI::DropdownMenuContent.new do %>
+      <%= render RubyUI::DropdownMenuItem.new(href: edit_settings_path) { t("shared.navigation.profile") } %>
+      <%= render RubyUI::DropdownMenuSeparator.new %>
+      <%= render RubyUI::DropdownMenuItem.new(href: destroy_session_path, data_turbo_method: "delete", class: "text-red-600 hover:bg-red-50 hover:text-red-600 focus:bg-red-50 focus:text-red-600") { t("shared.header.log_out") } %>
+    <% end %>
+  <% end %>
+</header>
