@@ -8,6 +8,12 @@ Base de projeto Rails para painéis administrativos. Serve como ponto de
 partida para novos projetos: já vem com autenticação, layout de admin,
 componentes de UI e i18n em pt-BR configurados.
 
+## Telas
+
+| Login | Dashboard |
+|---|---|
+| ![Login](docs/screenshots/login.png) | ![Dashboard](docs/screenshots/home.png) |
+
 ## Stack
 
 - Ruby 4.0.6 / Rails 8.1.3
