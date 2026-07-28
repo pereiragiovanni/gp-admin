@@ -3,6 +3,7 @@
 ![Ruby](https://img.shields.io/badge/Ruby-4.0.6-CC342D?logo=ruby&logoColor=white)
 ![Rails](https://img.shields.io/badge/Rails-8.1.3-D30001?logo=rubyonrails&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue?logo=postgresql&logoColor=white)
+![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 
 Base de projeto Rails para painéis administrativos. Serve como ponto de
 partida para novos projetos: já vem com autenticação, layout de admin,
@@ -42,3 +43,13 @@ bin/dev
 ```
 
 O `bin/dev` inicia o servidor Rails e o watcher do Tailwind juntos.
+
+## Testes
+
+```bash
+bin/rails test
+```
+
+Cobertura de `app/models` e `app/controllers` via SimpleCov (relatório gerado em
+`coverage/index.html` a cada execução). Views, componentes e helpers não entram
+nessa métrica.

@@ -5,9 +5,12 @@ class SettingsController < ApplicationController
   end
 
   def update
-    if Current.user.update(user_params)
+    @user = Current.user
+
+    if @user.update(user_params)
       redirect_to edit_settings_path, notice: t("flash.settings.updated")
     else
+      @breadcrumb = :profile
       render :edit, status: :unprocessable_entity
     end
   end
